@@ -19,7 +19,7 @@ int main(void){
 
 	unsigned char dat=0;
 	unsigned int dat_buf=0;
-	unsigned int bus=0;
+	unsigned int bus[4]={0};
 	unsigned char key_value=255;
 
 	unsigned long int a=0,b=1;
@@ -83,29 +83,40 @@ int main(void){
 
 
 			//beep(1);
-			
+			/*	
 			if(I2C_ALERT == 0){
 			  
-			   ina226_read_all(I2C_ADDR_CHARGE);
-			   ina226_read_all(I2C_ADDR_DISCHARGE);
-			   ina226_read_all(I2C_ADDR_BATT_1);
-			   ina226_read_all(I2C_ADDR_BATT_2);
+			  // ina226_read_all(I2C_ADDR_CHARGE);
+			   //ina226_read_all(I2C_ADDR_DISCHARGE);
+			   //ina226_read_all(I2C_ADDR_BATT_1);
+			   //ina226_read_all(I2C_ADDR_BATT_2);
 			   ina226_read_all(I2C_ADDR_BATT_3);
-			   ina226_read_all(I2C_ADDR_BATT_4);
+			   //ina226_read_all(I2C_ADDR_BATT_4); 
 			   
 			   //beep(1);
 
 			} 
-			
-			/*
-			i2c_read( I2C_ADDR_CHARGE, REG_CONFIG_ADDR, &bus); 
+			 */
+
+			 ina226_read_all(I2C_ADDR_BATT_1);
+			 ina226_read_all(I2C_ADDR_BATT_2);
+			 ina226_read_all(I2C_ADDR_BATT_3);
+			 ina226_read_all(I2C_ADDR_BATT_4);
+	   		 /*
+			i2c_read( I2C_ADDR_BATT_1, REG_CONFIG_ADDR, bus); 
+			i2c_read( I2C_ADDR_BATT_2, REG_CONFIG_ADDR, bus+1); 
+			//i2c_read( I2C_ADDR_BATT_3, REG_CONFIG_ADDR, bus+2); 
+			//i2c_read( I2C_ADDR_BATT_4, REG_CONFIG_ADDR, bus+3); 
 			if(bus == 0x4f27 ){
 			   a++;
 			}		
-			printf("\r\n %x,Rate=%f ",bus,( a*100.0)/b);
+			printf("\r\n %x %x",*bus, *(bus+1));
 			b++;
-			 */
-			
+
+			*/
+
+		
+
 			schedule_run();//start one time schedule module
 			
 			/**********************************hide_box* **************************************/

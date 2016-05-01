@@ -79,18 +79,22 @@ void  ina226_read_all(unsigned char i2c_addr){
 
 	/***********************************取得寄存器的值*************************************************/
 
-	while( i2c_read( i2c_addr, REG_CONFIG_ADDR, 	  &config)); 
-	while( 	i2c_read( i2c_addr, REG_SHUNT_ADDR, 	  &shunt));
+	while( 	i2c_read( i2c_addr, REG_ALERT_LIMIT_ADDR, &mask));
+
+	if(mask & 0x08);  else return ;	//如果数据转换成功，继续读取数据， 如果没有转换完成就停止读取数据，并返回
+
+	//while( i2c_read( i2c_addr, REG_CONFIG_ADDR, 	  &config)); 
+	//while( 	i2c_read( i2c_addr, REG_SHUNT_ADDR, 	  &shunt));
 	while( 	i2c_read( i2c_addr, REG_BUS_ADDR, 		  &bus)); 
-	while( 	i2c_read( i2c_addr, REG_POWER_ADDR,       &power)); 
-	while( 	i2c_read( i2c_addr, REG_CURRENT_ADDR, 	  &current)); 
-	while( 	i2c_read( i2c_addr, REG_CALIBRATION_ADDR, &calibration)); 
-	while( 	i2c_read( i2c_addr, REG_MASK_ENABLE_ADDR, &mask)); 
-	while( 	i2c_read( i2c_addr, REG_ALERT_LIMIT_ADDR, &alert));
+	//while( 	i2c_read( i2c_addr, REG_POWER_ADDR,       &power)); 
+	//while( 	i2c_read( i2c_addr, REG_CURRENT_ADDR, 	  &current)); 
+	//while( 	i2c_read( i2c_addr, REG_CALIBRATION_ADDR, &calibration)); 
+	//while( 	i2c_read( i2c_addr, REG_MASK_ENABLE_ADDR, &mask)); 
+	//while( 	i2c_read( i2c_addr, REG_ALERT_LIMIT_ADDR, &alert));
 
 	/***********************************处理数据结果*************************************************/
 
-
+	/*
 	if(shunt & 0x8000){	//判断电流值是否是负值
 	
 	    result_shunt = -(((~shunt) + 1) * 2.5/1000);//换算成电压mV,并且加上负号
@@ -99,16 +103,17 @@ void  ina226_read_all(unsigned char i2c_addr){
 
 	    result_shunt = result_shunt * 2.5/1000;//换算成电压mV
 	}
-
+	*/
 	if( (i2c_addr == I2C_ADDR_CHARGE) |(i2c_addr == I2C_ADDR_DISCHARGE)){ //judge which ina226 the data from 
 
 		 result_voltage = ((bus/400.0)*3);//总线电压
 
 	}else{
 		 result_voltage = bus/480.0;//总线电压
+		 if(result_voltage>=55) return;
 	}
 
-
+	/*
 	if(current & 0x8000){
 	
 		result_current = -(((~current) + 1)/1000.0);
@@ -117,11 +122,11 @@ void  ina226_read_all(unsigned char i2c_addr){
 
 		result_current = current/1000.0 ;//实际电流 （A）
 	}
-	
-	if( mask & 0x08 ) {
-		smg_write( (i2c_addr-0x40),(unsigned int)result_voltage );//数码管上显示电压值
-		//printf("%d \r\n",(unsigned int)result_voltage);
-	}
+	*/
+
+	smg_write( (i2c_addr-0x40),(unsigned int)result_voltage );//数码管上显示电压值
+	//printf("%d \r\n",(unsigned int)result_voltage);
+
 }
 
 

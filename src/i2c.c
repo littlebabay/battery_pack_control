@@ -232,7 +232,7 @@ unsigned char i2c_read(unsigned char i2c_addr,unsigned char reg_addr,unsigned in
 	//i2c_change_reg_addr(i2c_addr,reg_addr);//ĞŞ¸Ä¼Ä´æÆ÷Ö¸Õë
 	//i2c_change_reg_addr(i2c_addr,reg_addr);//ĞŞ¸Ä¼Ä´æÆ÷Ö¸Õë
 	//i2c_change_reg_addr(i2c_addr,reg_addr);//ĞŞ¸Ä¼Ä´æÆ÷Ö¸Õë
-	i2c_change_reg_addr(i2c_addr,reg_addr);//ĞŞ¸Ä¼Ä´æÆ÷Ö¸Õë
+	while(i2c_change_reg_addr(i2c_addr,reg_addr));//ĞŞ¸Ä¼Ä´æÆ÷Ö¸Õë
 
 	i2c_addr = (i2c_addr<<1) +1;//×óÒÆÒ»Î»£¬Ä©Î²²¹Ò»£¬±íÊ¾¶Á²Ù×÷
 
